@@ -29,12 +29,12 @@ There are a few configurations to be made to allow Traefik to proxy Docker conta
        labels:
          - "traefik.enable=true"
          - "traefik.http.routers.${SERVICE_NAME}.entrypoints=http"
-         - "traefik.http.routers.${SERVICE_NAME}.rule=Host(`${SERVICE_NAME}.${HOMEPAGE_VAR_DOMAIN}`)"
+         - "traefik.http.routers.${SERVICE_NAME}.rule=Host(`${SERVICE_NAME}.${MY_DOMAIN}`)"
          - "traefik.http.routers.${SERVICE_NAME}.middlewares=default-whitelist@file"
          - "traefik.http.middlewares.${SERVICE_NAME}-https-redirect.redirectscheme.scheme=https"
          - "traefik.http.routers.${SERVICE_NAME}.middlewares=${SERVICE_NAME}-https-redirect"
          - "traefik.http.routers.${SERVICE_NAME}-secure.entrypoints=https"
-         - "traefik.http.routers.${SERVICE_NAME}-secure.rule=Host(`${SERVICE_NAME}.${HOMEPAGE_VAR_DOMAIN}`)"
+         - "traefik.http.routers.${SERVICE_NAME}-secure.rule=Host(`${SERVICE_NAME}.${MY_DOMAIN}`)"
          - "traefik.http.routers.${SERVICE_NAME}-secure.tls=true"
          - "traefik.http.routers.${SERVICE_NAME}-secure.service=${SERVICE_NAME}"
          - "traefik.http.services.${SERVICE_NAME}.loadbalancer.server.port=${SERVICE_INTERNAL_PORT}"
@@ -47,4 +47,5 @@ There are a few configurations to be made to allow Traefik to proxy Docker conta
    ```config
    SERVICE_NAME=service1
    SERVICE_INTERNAL_PORT=the container's internal port where Traefik will redirect traffic
+   MY_DOMAIN=my.domain
    ```
