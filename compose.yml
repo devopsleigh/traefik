@@ -24,19 +24,23 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${MY_DOMAIN}`)"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=`${TRAEFIK_DASHBOARD_CREDS}`" # Run "htpasswd -nb username password" then double all $ characters to escape
+      # - "traefik.http.middlewares.traefik-auth.basicauth.users=`${TRAEFIK_DASHBOARD_CREDS}`" # Run "htpasswd -nb username password" then double all $ characters to escape
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${MY_DOMAIN}`)"
-      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      # - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=${MY_DOMAIN}"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${MY_DOMAIN}"
       - "traefik.http.routers.traefik-secure.service=api@internal"
-
+# 
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${MY_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      # - "traefik.http.routers.dashboard.middlewares=auth"
+      # - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDS}"
 networks:
   proxy:
     name: proxy
