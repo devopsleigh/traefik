@@ -1,4 +1,5 @@
 services:
+
   traefik:
     image: traefik:latest
     container_name: traefik
@@ -21,6 +22,11 @@ services:
       - ./config.yml:/config.yml:ro
       - ./logs:/var/log/traefik
     labels:
+      - "homepage.name=Traefik Dashboard"
+      - "homepage.description=TLS font-end and reverse proxy"
+      - "homepage.icon=traefik"
+      - "homepage.href=https://${SERVICE_NAME}.${MY_DOMAIN}"
+      - "homepage.group=Hosting"
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${MY_DOMAIN}`)"
@@ -43,5 +49,4 @@ services:
       # - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDS}"
 networks:
   proxy:
-    name: proxy
     external: true
