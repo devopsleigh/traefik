@@ -1,0 +1,15 @@
+http:
+  routers:
+    servicename:
+      rule: "Host(`servicename.domain`)"
+      service: servicename
+      entryPoints:
+        - https
+      tls:
+        certResolver: cloudflare
+
+  services:
+    servicename:
+      loadBalancer:
+        servers:
+          - url: "http://host.domain"

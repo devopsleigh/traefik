@@ -19,6 +19,16 @@ Traefic is a reverse proxy that provides certificates via Let's Encrypt and inte
 
 ## Usage
 
+### DNS
+
+Each service will need a DNS CNAME to point to the Traefik host.
+
+### Proxy for other hosts
+
+Rename `custom.yml.example` to `custom.yml` and edit to configure services that this Traefik instance will proxy (another VM or a NAS, for example).
+
+### Docker
+
 There are a few configurations to be made to allow Traefik to proxy Docker containers.
 
 1. On your DNS provider, create a CNAME for the new service and set the target to the host running Traefik.

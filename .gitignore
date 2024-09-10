@@ -1,4 +1,5 @@
 .env
 acme.json
+custom.yml
 logs/
 letsencrypt/
